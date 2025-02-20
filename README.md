@@ -1,63 +1,69 @@
-# ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
-
-## Template Instructions
-
-Welcome,
-
-This is the Code Institute student template for the bring your own data project option in Predictive Analytics. We have preinstalled all of the tools you need to get started. It's perfectly okay to use this template as the basis for your project submissions. Click the `Use this template` button above to get started.
-
-You can safely delete the Template Instructions section of this README.md file and modify the remaining paragraphs for your own project. Please do read the Template Instructions at least once, though! It contains some important information about the IDE and the extensions we use.
-
-## How to use this repo
-
-1. Use this template to create your GitHub project repo
-
-1. In your newly created repo click on the green Code button. 
-
-1. Then, from the Codespaces tab, click Create codespace on main.
-
-1. Wait for the workspace to open. This can take a few minutes.
-
-1. Open a new terminal and `pip3 install -r requirements.txt`
-
-1. Open the jupyter_notebooks directory, and click on the notebook you want to open.
-
-1. Click the kernel button and choose Python Environments.
-
-Note that the kernel says Python 3.12.1 as it inherits from the workspace, so it will be Python-3.12.1 as installed by Codespaces. To confirm this, you can use `! python --version` in a notebook code cell.
-
-## Cloud IDE Reminders
-
-To log into the Heroku toolbelt CLI:
-
-1. Log in to your Heroku account and go to _Account Settings_ in the menu under your avatar.
-2. Scroll down to the _API Key_ and click _Reveal_
-3. Copy the key
-4. In the terminal, run `heroku_config`
-5. Paste in your API key when asked
-
-
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
-
 
 ## Dataset Content
-* Describe your dataset. Choose a dataset of reasonable size to avoid exceeding the repository's maximum size and to have a shorter model training time. If you are doing an image recognition project, we suggest you consider using an image shape that is 100px × 100px or 50px × 50px, to ensure the model meets the performance requirement but is smaller than 100Mb for a smoother push to GitHub. A reasonably sized image set is ~5000 images, but you can choose ~10000 lines for numeric or textual data. 
+* The dataset is public and posted to Kaggle.com by user "Mohammed Arfath R", I made sure to pick an uncleaned dataset for my project. The data types include 6 continuous number columns (interger/float) and one categorical column (object). The columns describe data about Heart Rate, Blood Oxygen, Step Count, Sleep Duration, Activity Levels and Stress level.
 
 
 ## Business Requirements
-* Describe your business requirements
+* A company wishes to segment users into different groups based on health and activity data collected from smart watch sensors to target them with specific market advertisements for things like fitness products, health supplements or health/wellness classes/programs. The company also wants to conduct research on the correlation between various health metrics (e.g., heart rate, sleep duration, stress level) and overall well-being, contributing to the development of new health products and a more tailored recomender system.
 
 
 ## Hypothesis and how to validate?
-* List here your project hypothesis(es) and how you envision validating it (them) 
+* Alternative Hypothesis 1 - 
+  * Users can be segmented into distinct groups based on their health and acitivity data
+  * This is directley inline with the business requirement.
+    * Validation approach:
+      * Data cleaning and feature engineering
+      * Clustering methods
+      * Custering evaluation
+      * Predict what marketable group the customers belongs to
+* Null Hypothesis 2 -
+  * Users with a higher activity level should have lower stress levels.
+  * This segment could be targeted with high-intensity fitness products and workout classes/programs.
+    * Validation approach:
+      * Data cleaning and feature engineering
+      * Data visualization
+      * Correlation/PPS analysis
+      * Discover marketable correlations/relationships
+* Null Hypothesis 3 -
+  * Users with a higher heart rate should have a high step count.
+  * This segment could be targeted with more running related products
+    * Validation approach:
+      * Data cleaning and feature engineering
+      * Data visualization
+      * Correlation/PPS analysis
+      * Discover marketable correlations/relationships
 
 
 ## The rationale to map the business requirements to the Data Visualizations and ML tasks
-* List your business requirements and a rationale to map them to the Data Visualizations and ML tasks
+### Business Requirement 1: Segment users into different groups based on health and activity data
+
+#### Rationale:
+
+* Data Visualizations:
+  * Heatmaps: To visualize the correlation between different health metrics. This will help in understanding how variables like heart rate, activity level, and stress level interact with each other.
+  * Scatter Plots: To identify relationships between pairs of variables such as heart rate vs. step count or sleep duration vs. stress level.
+  * Box Plots: To compare the distribution of health metrics across different user segments.
+* ML Tasks:
+  * Clustering (e.g., K-means): To segment users into distinct groups based on their health and activity data. Clustering will help in identifying natural groupings in the data that can be targeted with specific marketing strategies.
+  * Dimensionality Reduction (e.g., PCA): To reduce the number of features while retaining most of the variance in the data. This helps in visualizing high-dimensional data and understanding the key factors that differentiate user segments.
+
+
+### Business Requirement 2: Conduct research for a more tailored recommender system to suggest health products and wellness program by finding relationships in health and activity data
+
+#### Rationale:
+
+* Data Visualizations:
+  * Bar Charts: To show the frequency of different health metrics and activities among user segments, helping in the identification of product preferences.
+  * Cluster Profiles: To summarize the characteristics of each user segment identified through clustering.
+* ML Tasks:
+  * Recommendation Algorithms (e.g., Collaborative Filtering): To suggest health products and wellness programs based on user preferences and health metrics.
+  * Classification Models: To predict the likelihood of users being interested in specific products or programs based on their health and activity data.
+  * Association Rule Learning: To identify common patterns and associations between different health metrics and product preferences.
 
 
 ## ML Business Case
-* In the previous bullet, you potentially visualized an ML task to answer a business requirement. You should frame the business case using the method we covered in the course 
+User Segmentation: Develop a machine learning model to segment users based on their health and activity data collected from smart watch sensors. This segmentation will enable the company to target users with specific market advertisements for fitness products, health supplements, or health/wellness classes/programs.
+Correlation Research: Conduct research on the correlation between certain health metrics collected from smart watch sensors to contribute to the development of new health products and a more tailored recommender system.
 
 
 ## Dashboard Design
