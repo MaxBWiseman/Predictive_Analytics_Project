@@ -10,6 +10,7 @@
 ## Hypothesis and how to validate?
 * Alternative Hypothesis 1 - 
   * Users can be segmented into distinct groups based on their health and acitivity data
+  * Significance Level/Alpha: 5%
   * This is directley inline with the business requirement.
     * Validation approach:
       * Data cleaning and feature engineering
@@ -18,6 +19,7 @@
       * Predict what marketable group the customers belongs to
 * Null Hypothesis 2 -
   * Users with a higher activity level should have lower stress levels.
+  * Significance Level/Alpha: 5%
   * This segment could be targeted with high-intensity fitness products and workout classes/programs.
     * Validation approach:
       * Data cleaning and feature engineering
@@ -26,6 +28,7 @@
       * Discover marketable correlations/relationships
 * Null Hypothesis 3 -
   * Users with a higher heart rate should have a high step count.
+  * Significance Level/Alpha: 5%
   * This segment could be targeted with more running related products
     * Validation approach:
       * Data cleaning and feature engineering
@@ -48,7 +51,7 @@
   * Dimensionality Reduction (e.g., PCA): To reduce the number of features while retaining most of the variance in the data. This helps in visualizing high-dimensional data and understanding the key factors that differentiate user segments.
 
 
-### Business Requirement 2: Conduct research for a more tailored recommender system to suggest health products and wellness program by finding relationships in health and activity data
+### Business Requirement 2: Conduct research for a more tailored recommender system to suggest health products and wellness programs by finding relationships from smart watch health and activity data
 
 #### Rationale:
 
@@ -63,7 +66,7 @@
 
 ## ML Business Case
 User Segmentation: Develop a machine learning model to segment users based on their health and activity data collected from smart watch sensors. This segmentation will enable the company to target users with specific market advertisements for fitness products, health supplements, or health/wellness classes/programs.
-Correlation Research: Conduct research on the correlation between certain health metrics collected from smart watch sensors to contribute to the development of new health products and a more tailored recommender system.
+Correlation Research: Conduct research on the correlation between certain health metrics collected from smart watch sensors to contribute to the development of better advertisement of health and sport products.
 
 
 ## Dashboard Design
