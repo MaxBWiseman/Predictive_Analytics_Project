@@ -4,8 +4,7 @@
 
 
 ## Business Requirements
-* A company wishes to segment users into different groups based on health and activity data collected from smart watch sensors to target them with specific market advertisements for things like fitness products, health supplements or health/wellness classes/programs. The company also wants to conduct research on the correlation between various health metrics (e.g., heart rate, sleep duration, stress level) and overall well-being, contributing to the development of new health products and a more tailored recomender system.
-
+* A company wishes to segment users into different groups based on health and activity data collected from smart watch sensors to target them with specific market advertisements for things like fitness products, health supplements or health/wellness classes/programs. The company also wants to conduct research on the correlation between various health metrics (e.g., heart rate, activity level, stress level), contributing to a better customer experience with targetted advertisments and product suggestions.
 
 ## Hypothesis and how to validate?
 * Alternative Hypothesis 1 - 
