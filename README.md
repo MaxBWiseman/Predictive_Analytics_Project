@@ -7,28 +7,31 @@
 * A company wishes to segment users into different groups based on health and activity data collected from smart watch sensors to target them with specific market advertisements for things like fitness products, health supplements or health/wellness classes/programs. The company also wants to conduct research on the correlation between various health metrics (e.g., heart rate, activity level, stress level), contributing to a better customer experience with targetted advertisments and product suggestions.
 
 ## Hypothesis and how to validate?
-* Alternative Hypothesis 1 - 
+* Hypothesis 1 - 
   * Users can be segmented into distinct groups based on their health and acitivity data
   * Significance Level/Alpha: 5%
-  * This is directley inline with the business requirement.
+  * This is directley inline with the business requirement
+  * This will be a Null Hypothesis, that users cannot be segmented into groups based on their smart watch health and acitivity data
     * Validation approach:
       * Data cleaning and feature engineering
       * Clustering methods
       * Custering evaluation
       * Predict what marketable group the customers belongs to
-* Null Hypothesis 2 -
-  * Users with a higher activity level should have lower stress levels.
+* Hypothesis 2 -
+  * Users with a higher activity level should have lower stress levels
   * Significance Level/Alpha: 5%
   * This segment could be targeted with high-intensity fitness products and workout classes/programs.
+  * This will be a Null Hypothesis, there wont be a correlation between activity level and stress level
     * Validation approach:
       * Data cleaning and feature engineering
       * Data visualization
       * Correlation/PPS analysis
       * Discover marketable correlations/relationships
-* Null Hypothesis 3 -
-  * Users with a higher heart rate should have a high step count.
+* Hypothesis 3 -
+  * Users with a higher heart rate should have a high step count
   * Significance Level/Alpha: 5%
   * This segment could be targeted with more running related products
+  * This will be a Null Hypothesis, there wont be a correlation between heart rate and step count
     * Validation approach:
       * Data cleaning and feature engineering
       * Data visualization
