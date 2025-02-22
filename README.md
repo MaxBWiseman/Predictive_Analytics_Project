@@ -1,12 +1,15 @@
 
 ## Dataset Content
+
 * The dataset is public and posted to Kaggle.com by user "Mohammed Arfath R", I made sure to pick an uncleaned dataset for my project. The data types include 6 continuous number columns (interger/float) and one categorical column (object). The columns describe data about Heart Rate, Blood Oxygen, Step Count, Sleep Duration, Activity Levels and Stress level.
 
 
 ## Business Requirements
+
 * A company wishes to segment users into different groups based on health and activity data collected from smart watch sensors to target them with specific market advertisements for things like fitness products, health supplements or health/wellness classes/programs. The company also wants to conduct research on the correlation between various health metrics (e.g., heart rate, activity level, stress level), contributing to a better customer experience with targetted advertisments and product suggestions.
 
 ## Hypothesis and how to validate?
+
 * Hypothesis 1 - 
   * Users can be segmented into distinct groups based on their health and acitivity data
   * Significance Level/Alpha: 5%
@@ -18,7 +21,7 @@
       * Custering evaluation
       * Predict what marketable group the customers belongs to
 * Hypothesis 2 -
-  * Users with a higher activity level should have lower stress levels
+  * Users with varying stress levels are expected to find either positive or negative correlations with other smart-watch health variables
   * Significance Level/Alpha: 5%
   * This segment could be targeted with high-intensity fitness products and workout classes/programs.
   * This will be a Null Hypothesis, there wont be a correlation between activity level and stress level
@@ -28,7 +31,7 @@
       * Correlation/PPS analysis
       * Discover marketable correlations/relationships
 * Hypothesis 3 -
-  * Users with a higher heart rate should have a high step count
+  * Users with a high or low step counts are expected to find either positive or negative correlations with other smart-watch health variables
   * Significance Level/Alpha: 5%
   * This segment could be targeted with more running related products
   * This will be a Null Hypothesis, there wont be a correlation between heart rate and step count
@@ -40,13 +43,14 @@
 
 
 ## The rationale to map the business requirements to the Data Visualizations and ML tasks
+
 ### Business Requirement 1: Segment users into different groups based on health and activity data
 
 #### Rationale:
 
 * Data Visualizations:
   * Heatmaps: To visualize the correlation between different health metrics. This will help in understanding how variables like heart rate, activity level, and stress level interact with each other.
-  * Scatter Plots: To identify relationships between pairs of variables such as heart rate vs. step count or sleep duration vs. stress level.
+  * Density Plots: To identify relationships between pairs of variables such as heart rate vs. step count or sleep duration vs. stress level etc.
   * Box Plots: To compare the distribution of health metrics across different user segments.
 * ML Tasks:
   * Clustering (e.g., K-means): To segment users into distinct groups based on their health and activity data. Clustering will help in identifying natural groupings in the data that can be targeted with specific marketing strategies.
@@ -67,20 +71,24 @@
 
 
 ## ML Business Case
+
 User Segmentation: Develop a machine learning model to segment users based on their health and activity data collected from smart watch sensors. This segmentation will enable the company to target users with specific market advertisements for fitness products, health supplements, or health/wellness classes/programs.
 Correlation Research: Conduct research on the correlation between certain health metrics collected from smart watch sensors to contribute to the development of better advertisement of health and sport products.
 
 
 ## Dashboard Design
+
 * List all dashboard pages and their content, either blocks of information or widgets, like buttons, checkboxes, images, or any other item that your dashboard library supports.
 * Later, during the project development, you may revisit your dashboard plan to update a given feature (for example, at the beginning of the project you were confident you would use a given plot to display an insight but subsequently you used another plot type).
 
 
 
 ## Unfixed Bugs
+
 * You will need to mention unfixed bugs and why they were not fixed. This section should include shortcomings of the frameworks or technologies used. Although time can be a significant variable to consider, paucity of time and difficulty understanding implementation is not a valid reason to leave bugs unfixed.
 
 ## Deployment
+
 ### Heroku
 
 * The App live link is: https://YOUR_APP_NAME.herokuapp.com/ 
@@ -96,6 +104,7 @@ Correlation Research: Conduct research on the correlation between certain health
 
 
 ## Main Data Analysis and Machine Learning Libraries
+
 * Here you should list the libraries you used in the project and provide an example(s) of how you used these libraries.
 
 
@@ -118,5 +127,6 @@ Correlation Research: Conduct research on the correlation between certain health
 
 
 ## Acknowledgements (optional)
+
 * Thank the people who provided support through this project.
 
