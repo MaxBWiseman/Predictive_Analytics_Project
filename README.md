@@ -1,4 +1,6 @@
 
+[![wakatime](https://wakatime.com/badge/user/d85da0fd-b442-4c33-98af-3ef622520fc1/project/57b25889-4ebb-44ea-b083-b0d3fb3c5d16.svg)](https://wakatime.com/badge/user/d85da0fd-b442-4c33-98af-3ef622520fc1/project/57b25889-4ebb-44ea-b083-b0d3fb3c5d16)
+
 ## Dataset Content
 
 * The dataset is public and posted to Kaggle.com by user "Mohammed Arfath R", I made sure to pick an uncleaned dataset for my project. The data types include 6 continuous number columns (interger/float) and one categorical column (object). The columns describe data about Heart Rate, Blood Oxygen, Step Count, Sleep Duration, Activity Levels and Stress level.
@@ -29,7 +31,7 @@
       * Data cleaning and feature engineering
       * Data visualization
       * Correlation/PPS analysis
-      * Discover marketable correlations/relationships
+      * Discover marketable correlations/relationships with an ML solution if applicable
 * Hypothesis 3 -
   * Users with a high or low step counts are expected to find either positive or negative correlations with other smart-watch health variables
   * Significance Level/Alpha: 5%
@@ -39,7 +41,7 @@
       * Data cleaning and feature engineering
       * Data visualization
       * Correlation/PPS analysis
-      * Discover marketable correlations/relationships
+      * Discover marketable correlations/relationships with an ML solution if applicable
 
 
 ## The rationale to map the business requirements to the Data Visualizations and ML tasks
