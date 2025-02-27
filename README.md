@@ -23,7 +23,7 @@
       * Custering evaluation
       * Predict what marketable group the customers belongs to
 * Hypothesis 2 -
-  * Users with varying stress levels are expected to find either positive or negative correlations with other smart-watch health variables
+  * Users with varying stress levels are expected to find either positive or negative correlations with other smart-watch health variables. Try and predict stress levels if applicable
   * Significance Level/Alpha: 5%
   * This segment could be targeted with high-intensity fitness products and workout classes/programs.
   * This will be a Null Hypothesis, there wont be a correlation between activity level and stress level
@@ -33,7 +33,7 @@
       * Correlation/PPS analysis
       * Discover marketable correlations/relationships with an ML solution if applicable
 * Hypothesis 3 -
-  * Users with a high or low step counts are expected to find either positive or negative correlations with other smart-watch health variables
+  * Users with a high or low step counts are expected to find either positive or negative correlations with other smart-watch health variables. Try and predict step counts if applicable
   * Significance Level/Alpha: 5%
   * This segment could be targeted with more running related products
   * This will be a Null Hypothesis, there wont be a correlation between heart rate and step count
