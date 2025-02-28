@@ -76,6 +76,7 @@
 
 User Segmentation: Develop a machine learning model to segment users based on their health and activity data collected from smart watch sensors. This segmentation will enable the company to target users with specific market advertisements for fitness products, health supplements, or health/wellness classes/programs.
 Correlation Research: Conduct research on the correlation between certain health metrics collected from smart watch sensors to contribute to the development of better advertisement of health and sport products.
+If correlation exists attempt to predict (Stress Level, Step Count).
 
 
 ## Dashboard Design
