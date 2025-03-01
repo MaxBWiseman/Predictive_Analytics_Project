@@ -273,6 +273,46 @@ def CleanDataPipeline():
     ])
     return cleaning_engineering_pipeline
 
+import plotly.express as px
+
+
+def cluster_distribution_per_variable(df, target):
+    """
+    The data should have 2 variables, the cluster predictions and
+    the variable you want to analyze with, in this case we call "target".
+    We use plotly express to create 2 plots:
+    Cluster distribution across the target.
+    Relative presence of the target level in each cluster.
+    """
+    df_bar_plot = df.groupby(['Clusters', target]).size().reset_index(name='Count')
+    df_bar_plot.columns = ['Clusters', target, 'Count']
+    df_bar_plot[target] = df_bar_plot[target].astype('object')
+
+    print(f"Clusters distribution across {target} levels")
+    fig = px.bar(df_bar_plot, x='Clusters', y='Count',
+                 color=target, width=800, height=500)
+    fig.update_layout(xaxis=dict(tickmode='array',
+                      tickvals=df['Clusters'].unique()))
+    fig.show(renderer='jupyterlab')
+
+    df_relative = (df
+                   .groupby(["Clusters", target])
+                   .size()
+                   .unstack(fill_value=0)
+                   .apply(lambda x: 100 * x / x.sum(), axis=1)
+                   .stack()
+                   .reset_index(name='Relative Percentage (%)')
+                   .sort_values(by=['Clusters', target])
+                   )
+
+    print(f"Relative Percentage (%) of {target} in each cluster")
+    fig = px.line(df_relative, x='Clusters', y='Relative Percentage (%)',
+                  color=target, width=800, height=500)
+    fig.update_layout(xaxis=dict(tickmode='array',
+                      tickvals=df['Clusters'].unique()))
+    fig.update_traces(mode='markers+lines')
+    fig.show(renderer='jupyterlab')
+
 
 @st.cache_data
 def load_data():
