@@ -16,14 +16,14 @@ def page_predict_stress_level():
     classification_model = load_pkl_file("src/predict_stress_level/discretized_smartwatch_health_data_model.pkl")
 
     # File input for the model
-    st.sidebar.title("Model File Input")
-    uploaded_file = st.sidebar.file_uploader("Upload smartwatch health data", type=["pkl"])
+    st.sidebar.title("Data File Input")
+    uploaded_file = st.sidebar.file_uploader("Upload smartwatch health data", type=["csv"])
 
     if uploaded_file is not None:
         # Load and preprocess the uploaded file
         try:
-            data = pickle.load(uploaded_file)
-            st.success("Best Model File Uploaded Successfully!")
+            data = pd.read_csv(uploaded_file)
+            st.success("File Uploaded Successfully!")
             
             # Example: Use the model for prediction
             predictions = classification_model.predict(data)  # Ensure 'data' is formatted correctly

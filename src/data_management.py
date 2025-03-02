@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
+import pickle
 
 import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -25,20 +26,6 @@ class DataTypeTransformer(BaseEstimator, TransformerMixin):
 
         return X
 
-
-# Reduced for the discretized version of the Stress level variable, as dont need to replace 'Very High' with 10
-class DataTypeTransformer2(BaseEstimator, TransformerMixin):
-    def __init__(self):
-        pass
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X):
-        X = X.copy()
-        # Convert columns to numeric, handling non-numeric values
-        X['Sleep Duration (hours)'] = pd.to_numeric(X['Sleep Duration (hours)'], errors='coerce')
-        return X
 
 # Impute missing values (not for Activity Level)
 from sklearn.impute import KNNImputer
@@ -234,12 +221,12 @@ class OutlierTrimmerTransformer(BaseEstimator, TransformerMixin):
             X = trimmer.transform(X)
         return X
 
-
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
+# This is important else even the categoric column will be minmax scaled resulting in much different components when evaluated with a PCA
+from sklearn.preprocessing import MinMaxScaler , StandardScaler , RobustScaler
 class DataFrameScaler(BaseEstimator, TransformerMixin):
     def __init__(self, exclude_columns=None):
         self.exclude_columns = exclude_columns
-        self.scaler = StandardScaler()
+        self.scaler = RobustScaler()
     
     def fit(self, X, y=None):
         X_to_scale = X.drop(columns=self.exclude_columns)
@@ -265,62 +252,23 @@ def CleanDataPipeline():
         ('winsorizer_transformer', WinsorizerTransformer()),
         ('categorical_imputer', CategoricalImputer()),
         ('category_corrector', CategoryCorrector()),
-        ('float_to_int', FloatToInt()),
         ('data_smoother', DataSmoother(k=3)),
         ('outlier_trimmer_transformer', OutlierTrimmerTransformer()),
         ('encoder', OrdinalEncoder(encoding_method='arbitrary', variables=["Activity Level"])),
-        # ('minmax', DataFrameScaler(exclude_columns=["Activity Level"])),
-    ])
+        ('scaler', DataFrameScaler(exclude_columns=["Activity Level", "Stress Level"])),
+        ('float_to_int', FloatToInt()),
+        ])
     return cleaning_engineering_pipeline
 
 import plotly.express as px
 
-
-def cluster_distribution_per_variable(df, target):
-    """
-    The data should have 2 variables, the cluster predictions and
-    the variable you want to analyze with, in this case we call "target".
-    We use plotly express to create 2 plots:
-    Cluster distribution across the target.
-    Relative presence of the target level in each cluster.
-    """
-    df_bar_plot = df.groupby(['Clusters', target]).size().reset_index(name='Count')
-    df_bar_plot.columns = ['Clusters', target, 'Count']
-    df_bar_plot[target] = df_bar_plot[target].astype('object')
-
-    print(f"Clusters distribution across {target} levels")
-    fig = px.bar(df_bar_plot, x='Clusters', y='Count',
-                 color=target, width=800, height=500)
-    fig.update_layout(xaxis=dict(tickmode='array',
-                      tickvals=df['Clusters'].unique()))
-    fig.show(renderer='jupyterlab')
-
-    df_relative = (df
-                   .groupby(["Clusters", target])
-                   .size()
-                   .unstack(fill_value=0)
-                   .apply(lambda x: 100 * x / x.sum(), axis=1)
-                   .stack()
-                   .reset_index(name='Relative Percentage (%)')
-                   .sort_values(by=['Clusters', target])
-                   )
-
-    print(f"Relative Percentage (%) of {target} in each cluster")
-    fig = px.line(df_relative, x='Clusters', y='Relative Percentage (%)',
-                  color=target, width=800, height=500)
-    fig.update_layout(xaxis=dict(tickmode='array',
-                      tickvals=df['Clusters'].unique()))
-    fig.update_traces(mode='markers+lines')
-    fig.show(renderer='jupyterlab')
-
-
-@st.cache_data
 def load_data():
     df = pd.read_csv("inputs/smartwatch_health_data_untouched/unclean_smartwatch_health_data.csv")
+    df = df.drop("User ID", axis=1)
     pipeline = CleanDataPipeline()
     df = pipeline.fit_transform(df)
     return df
 
-
 def load_pkl_file(file_path):
-    return joblib.load(filename=file_path)
+    with open(file_path, 'rb') as file:
+        return pickle.load(file)
