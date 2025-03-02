@@ -121,18 +121,18 @@ def generate_and_save_model(df):
 
     plot_feature_importance(df_feature_importance)
 
-    if not os.path.exists('streamlit_outputs'):
-        os.makedirs('streamlit_outputs')
-    with open('streamlit_outputs/model.pkl', 'wb') as f:
+    if not os.path.exists('outputs/streamlit_outputs'):
+        os.makedirs('outputs/streamlit_outputs')
+    with open('outputs/streamlit_outputs/model.pkl', 'wb') as f:
         pickle.dump(pipeline_cluster, f)
 
-    X.to_csv('streamlit_outputs/clustered_data.csv', index=False)
+    X.to_csv('outputs/streamlit_outputs/clustered_data.csv', index=False)
 
-    st.success("Model has been trained and saved as 'streamlit_outputs/model.pkl'.")
+    st.success("Model has been trained and saved as 'outputs/streamlit_outputs/model.pkl'.")
 
 def page_cluster_body():
-    df = pd.read_csv('streamlit_outputs/clustered_data.csv')
-    cluster_pipe = dm.load_pkl_file("streamlit_outputs/model.pkl")
+    df = pd.read_csv('outputs/streamlit_outputs/clustered_data.csv')
+    cluster_pipe = dm.load_pkl_file("outputs/streamlit_outputs/model.pkl")
     pca_component_plot = plt.imread("src/cluster_perm/pca_component_plot_cluster.png")
     cluster_profile = df["Clusters"].value_counts().reset_index()
     cluster_final_df = df
@@ -276,7 +276,7 @@ def main():
 
     generate_and_save_model(df)
 
-    cluster_model = dm.load_pkl_file('streamlit_outputs/model.pkl')
+    cluster_model = dm.load_pkl_file('outputs/streamlit_outputs/model.pkl')
 
     st.sidebar.title("Data File Input")
     uploaded_file = st.sidebar.file_uploader("Upload smartwatch health data", type=["csv"])

@@ -263,7 +263,7 @@ def CleanDataPipeline():
 import plotly.express as px
 
 def load_data():
-    df = pd.read_csv("inputs/smartwatch_health_data_untouched/unclean_smartwatch_health_data.csv")
+    df = pd.read_csv("src/unclean_smartwatch_health_data.csv")
     df = df.drop("User ID", axis=1)
     pipeline = CleanDataPipeline()
     df = pipeline.fit_transform(df)
