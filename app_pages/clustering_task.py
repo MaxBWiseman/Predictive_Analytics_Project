@@ -9,15 +9,15 @@ def page_cluster_body():
 
 
     cluster_pipe = dm.load_pkl_file(
-        "src/final_cluster_model.pkl")
+        "src/cluster_perm/final_cluster_model.pkl")
     cluster_silhouette = plt.imread(
-        "src/silhouette_plot_6_clusters.png")
+        "src/cluster_perm/silhouette_plot_6_clusters.png")
     important_features = plt.imread(
-        "src/feature_importance.png")
+        "src/cluster_perm/feature_importance.png")
     cluster_profile = pd.read_csv(
-        "src/df_clusters_profile.csv")
-    cluster_final_df = (pd.read_csv("src/final_cluster_data.csv"))
-    final_model = dm.load_pkl_file("src/final_cluster_model.pkl")
+        "src/cluster_perm/df_clusters_profile.csv")
+    cluster_final_df = (pd.read_csv("src/cluster_perm/final_cluster_data.csv"))
+    final_model = dm.load_pkl_file("src/cluster_perm/final_cluster_model.pkl")
     cluster_features = final_model['preprocessor'].transformers_[0][1].get_feature_names_out()
     
     if st.checkbox("Inspect cleaned clustering data"):

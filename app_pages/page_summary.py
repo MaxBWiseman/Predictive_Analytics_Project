@@ -3,7 +3,6 @@ import streamlit as st
 def page_summary_body():
     st.write("### Quick Project Summary")
 
-    # text based on README file - "Dataset Content" section
     st.info(
         f"**Dataset Content**\n"
         f"* The dataset is public and posted to Kaggle.com by user 'Mohammed Arfath R'.\n"
@@ -14,7 +13,7 @@ def page_summary_body():
         f"* The dataset is uncleaned and includes raw data from smart watch sensors.\n"
         f"* The data is used for segmenting users into different groups based on their health and activity data.\n\n"
     )
-        # ML Business Case
+    
     st.info(
         f"**ML Business Case**\n\n"
         f"* **User Segmentation**: Develop a machine learning model to segment users based on their health and activity data collected from smart watch sensors. This segmentation will enable the company to target users with specific market advertisements for fitness products, health supplements, or health/wellness classes/programs.\n"
@@ -22,12 +21,10 @@ def page_summary_body():
         f"* If correlation exists, attempt to predict (Stress Level, Step Count).\n"
     )
 
-    # Link to README file, so the users can have access to full project documentation
     st.write(
         f"* For additional information, please visit and **read** the "
-        f"[Project README file](https://www.kaggle.com/mohammedarfathr/dataset-link).")
     
-    # Business Requirements
+
     st.success(
         f"**Business Requirements**\n"
         f"A company wishes to:\n"

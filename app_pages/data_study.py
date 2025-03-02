@@ -22,26 +22,6 @@ def heatmap_corr(data, threshold, figsize=(12, 12), annot_size=6):
     plt.ylim(len(data.columns), 0)
     plt.show()
 
-def density_plot_montage(df, columns):
-    fig, axes = plt.subplots(len(columns), len(columns), figsize=(20, 20))
-    fig.suptitle('Density Plots Montage', fontsize=20)
-
-    for i, col1 in enumerate(columns):
-        for j, col2 in enumerate(columns):
-            if i > j:
-                sns.kdeplot(
-                    x=df[col2], y=df[col1],
-                    cmap='viridis', fill=True,
-                    ax=axes[i, j]
-                )
-                axes[i, j].set_xlabel(col2)
-                axes[i, j].set_ylabel(col1)
-            else:
-                axes[i, j].axis('off')
-    
-    plt.tight_layout(rect=[0, 0, 1, 0.96])
-    st.pyplot(fig)
-
 def heatmap_pps(df, threshold, figsize=(8, 8), font_annot=10):
     if len(df.columns) > 1:
         mask = np.zeros_like(df, dtype=bool)
@@ -108,14 +88,12 @@ def page_study_body():
     
     if st.checkbox("Show correlation heatmap"):
         heatmap_corr(data=corr_matrix, threshold=0.0)
+
     
-    columns = ['Heart Rate (BPM)', 'Blood Oxygen Level (%)', 'Step Count',
-               'Sleep Duration (hours)', 'Stress Level',
-               'Activity Level_Highly Active',
-               'Activity Level_Active', 'Activity Level_Sedentary']
-    
-    if st.checkbox("Show density plot montage (will take about 3 minutes)"):
-        density_plot_montage(df_encoded, columns)
+    if st.checkbox("Show density plot montage"):
+        density_plot = plt.imread(
+        "src/density_plots_montage.png")
+        st.image(density_plot)
     
     pps_matrix_raw = pps.matrix(df_encoded)
     pps_matrix = pps_matrix_raw.filter(['x', 'y', 'ppscore']).pivot(columns='x', index='y', values='ppscore')
