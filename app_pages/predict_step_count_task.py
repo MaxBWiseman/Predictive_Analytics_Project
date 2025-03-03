@@ -165,11 +165,10 @@ def predict_step_count_task():
         if not os.path.exists('outputs/predict_step_count'):
             os.makedirs('outputs/predict_step_count')
         with open(
-            "outputs/predict_step_count/"
-            "discretized_smartwatch_health_data_model.pkl", "wb") as file:
+                "outputs/predict_step_count/"
+                "discretized_smartwatch_health_data_model.pkl", "wb") as file:
             pickle.dump(best_pipeline_modeler, file)
-            # This comes up as a warning in the console, but not other way to
-            # shorten the line.
+        # Apparentley this above line split is legal.
 
         # Download results
         st.write("Download processed data:")

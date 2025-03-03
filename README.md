@@ -5,6 +5,7 @@
 
 * The dataset is public and posted to Kaggle.com by user "Mohammed Arfath R", I made sure to pick an uncleaned dataset for my project. The data types include 6 continuous number columns (interger/float) and one categorical column (object). The columns describe data about Heart Rate, Blood Oxygen, Step Count, Sleep Duration, Activity Levels and Stress level.
 
+Kaggle data link = https://www.kaggle.com/datasets/mohammedarfathr/smartwatch-health-data-uncleaned/data
 
 ## Business Requirements
 
@@ -81,28 +82,30 @@ If correlation exists attempt to predict (Stress Level, Step Count).
 
 ## Dashboard Design
 
-My dashboard is built with user-friendly widgets to make your data exploration straightforward:
+My dashboard is built with user-friendly widgets to make the data exploration straightforward:
+
+Minimal: A sleek minimalist look, with no distractions or noise
 
 Checkboxes: Customize what you see by toggling different plots or performance metrics.
 
 Colored Highlights: We've used colors to make key information stand out, which is especially helpful for visual learners.
 
-Images: Displayed plots help you visualize the data clearly.
+Drag and Drop files: If you need a version of the dataset yourself, see the link referenced at the top of the README
 
 Interactive Plots: Engage with the data using interactive plots like parallel coordinates or heatmaps.
 
-This dashboard doesn't just show the results of our machine learning models—it lets you get involved with the data directly. By combining clear visuals with easy-to-use widgets, we're turning complex data into insights you can actually use. Whether you're adjusting model settings, exploring how different features relate, or checking how well the model is performing, this dashboard makes it easier to understand and interact with the machine learning process.
+This dashboard doesn't just show the results of our machine learning models—it lets you get involved with the data directly. By combining clear visuals with easy-to-use widgets, turning complex data into insights. Whether you're viewing the model setup, exploring how different features relate, or checking how well the model is performing, this dashboard makes it easier to understand and interact with the machine learning process.
 
 
 
 ## Unfixed Bugs
 
-* There is a visual bug in the dashboards, sometimes you will see text that has "" quotes around it unnessesarily, this is because of line breaks
+* There is a visual bug in the dashboards, sometimes you will see text that has "" quotes around it unnessesarily, this is because of line breaks. Checkboxes dont reset on streamlit "rerun". Though there effective when clicked on or off. I did not get the chance to work out the p-score for the alpha. From an educated view id say the clustering task would have passed, and the two supervised classification models would probably fail this alpha of 5% as they overfitted.
 ## Deployment
 
 ### Heroku
 
-* The App live link is: https://YOUR_APP_NAME.herokuapp.com/ 
+* The App live link is: https://project-5-predictive-a0b8257f7e7d.herokuapp.com/
 * Set the runtime.txt Python version to a [Heroku-24](https://devcenter.heroku.com/articles/python-support#supported-runtimes) stack currently supported version.
 * The project was deployed to Heroku using the following steps.
 
@@ -122,12 +125,11 @@ This dashboard doesn't just show the results of our machine learning models—it
 * Seaborn - For data visuals
 * Matplotlib.pyplot - Also for visuals
 * Pyplot - Interactive visuals
-* xgboost - Used to test the three tasks, to see if suitable algorithm.
 * ydata-profiling - For quick and insightful EDA's
 * Yellowbrick - Helps visualise model related things like feature importance or silhouette/Kelbow plots
 * Feature-Engine - Provides various feature cleaning and engineering solutions
 * ppscore - To aid in finding correlations
-
+* Streamlit - To create quick, functional dashboards
 
 ## Credits 
 

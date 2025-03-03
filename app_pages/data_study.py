@@ -10,7 +10,7 @@ from feature_engine.discretisation import ArbitraryDiscretiser
 import ppscore as pps
 
 
-def heatmap_corr(data, threshold, figsize=(12, 12), annot_size=6):
+def heatmap_corr(data, threshold, figsize=(16, 16), annot_size=10):
     # Create the mask for the upper diagonal and
     # show only values greater than the threshold
     mask = np.zeros_like(data, dtype=bool)
@@ -132,144 +132,115 @@ def page_study_body():
         'Stress Level', 'Activity Level']
     st.write("Parallel Plot:")
     parallel_plot(df_clean, columns_to_parallel)
+    st.write("""
+    **Step Count and Activity Level:**
+
+    Individuals with higher step counts are more likely to fall into the
+    "Highly Active" or "Active" categories. Conversely, those in the
+    "Sedentary" group usually have lower step counts.
+
+    This correlation reinforces the intuitive link between physical activity
+    and daily movement.
+
+    **Sleep Duration and Stress Level:**
+
+    People with 6-8 hours of sleep seem to exhibit varying stress levels,
+    from "Very Low" to "High." However, those with 4-6 hours of sleep are
+    more often associated with higher stress levels.
+
+    This suggests that shorter sleep durations might correlate with
+    increased stress.
+
+    **Cross-Variable Trends:**
+
+    Some lines connect individuals with moderate activity levels, shorter
+    sleep durations, and elevated stress. This pattern may indicate that
+    lack of sleep and stress influence overall physical activity.
+    """)
 
     # Calculate the correlation matrix
     corr_matrix = df_encoded.corr(method='spearman')
 
     if st.checkbox("Show correlation heatmap"):
         heatmap_corr(data=corr_matrix, threshold=0.0)
+        st.write("""
+**Activity Levels Interplay:**
+
+There’s a strong negative correlation between Activity Level: Sedentary and
+the other activity levels (Highly Active and Active). This indicates that
+being more sedentary is inversely linked to engaging in active or highly
+active behaviors, which is expected but visually confirms the contrast
+between these categories.
+
+**Sleep Duration and Stress:**
+
+Interestingly, the correlation between Sleep Duration and Stress Level is
+close to zero (0.012). This suggests that in this dataset, longer sleep
+durations are not significantly associated with lower stress levels—a
+surprising result that may indicate other underlying factors at play.
+
+**Heart Rate and Physical Activity:**
+
+The correlation between Heart Rate (BPM) and activity levels is weak. This
+implies that general heart rate might not be a reliable indicator of someone's
+specific activity level categories (e.g., Sedentary, Active).
+
+**Step Count and Activity Levels:**
+
+Step Count shows very weak or no clear correlation with the levels of activity
+presented here (e.g., Sedentary vs. Active). This might indicate that step
+count alone is not enough to classify someone's activity into these discrete
+categories, and other factors likely contribute.
+
+**Lack of Strong Overall Trends:**
+
+The heatmap highlights an overall scarcity of strong correlations between many
+of the metrics, with most values near zero. This could point to more complex,
+non-linear relationships or even noise in the data that requires further
+exploration.
+
+**Key Takeaways on Negative Relationships:**
+
+The most pronounced negative relationships are between Activity Level:
+Sedentary and the other activity levels, reinforcing the idea that these
+states are mutually exclusive. This clarity might help when trying to design
+interventions to shift individuals toward more active habits.
+""")
 
     if st.checkbox("Show density plot montage"):
         density_plot = plt.imread("src/density_plots_montage.png")
         st.image(density_plot)
-        st.write(
-            "* Blood Oxygen Level (%) vs. Heart Rate (BPM):"
-            "  * There's a concentration of data points around a"
-            "    heart rate of 65-80 BPM and blood oxygen levels of 95-100%."
-            "    This suggests that most individuals have a heart"
-            "    rate within this range when blood oxygen levels are high."
-            
-            "* Step Count vs. Heart Rate (BPM):"
-            "  * Higher step counts are associated with a more tight"
-            "    range of heart rates, with a concentration around 60-90 BPM."
-            "    This suggests that individuals with higher step counts tend"
-            "    to have a healthy heart rate of about 60-90 bpm,"
-            "    whereas people with a higher more unhealthy heart"
-            "    rate of around 160 bpm starts bottlenecking at the"
-            "    6000 steps mark. Showing few people with a"
-            "    high heart rate have a step count over 6000."
-            
-            "* Step Count vs. Blood Oxygen Level (%):"
-            "  * Higher step counts are associated with blood oxygen"
-            "    levels around 95-100%. This suggests that individuals"
-            "    with higher step counts tend to maintain high"
-            " blood oxygen levels."
-            
-            "* Sleep Duration (hours) vs. Heart Rate (BPM):"
-            "  * There's a concentration of data points around 6-8"
-            "    hours of sleep and a heart rate of 60-80 BPM."
-            "    This suggests that individuals who sleep for"
-            "    6-8 hours tend to have a moderate heart rate."
-            
-            "* Sleep Duration (hours) vs. Blood Oxygen Level (%):"
-            "  * Sleep duration is generally associated with blood"
-            "    oxygen levels around 95-100%. This suggests that"
-            "    individuals maintain high blood oxygen"
-            "    levels regardless of sleep duration."
-            
-            "* Sleep Duration (hours) vs. Step Count:"
-            "  * There's a concentration of data points around 6-8 hours"
-            "    of sleep. This shows that people with lower step counts"
-            "    tend to sleep longer than people with higher step counts."
-            "    The people with lower step counts are the majority."
-            
-            "* Stress Level vs. Heart Rate (BPM):"
-            "  * There's a concentration of data points around a heart"
-            "    rate of 60-80 BPM and varying stress levels."
-            "    This suggests that stress level is not strongly"
-            "    correlated with heart rate. But you could say most"
-            "    people during varying levels of stress"
-            "    experience heart rates of around 60-80 bpm."
-            
-            "* Stress Level vs. Blood Oxygen Level (%):"
-            "  * Stress levels are associated with blood"
-            "    oxygen levels around 95-100%. This suggests that"
-            "    individuals maintain high blood oxygen levels during stress."
-            
-            "* Stress Level vs. Step Count:"
-            "  * There's a concentration of data points around"
-            "    varying stress levels and lower step counts."
-            "    This suggests that people with a higher step count"
-            "    feel less stressed, with majority having a low step"
-            "    count and experiencing fluctuating levels of stress."
-            
-            "* Stress Level vs. Sleep Duration (hours):"
-            "  * There's a concentration of data points around 6-8 hours"
-            "    of sleep and varying stress levels. This suggests that people"
-            "    who are experiencing varying levels of stress"
-            "    only sleep for about 6-7 hours."
-            
-            "* OneHotEncoder generated columns from the"
-            "  'Activity Levels' categoric variable"
-            "  that consisted of 3 classes after cleaning"
-            
-            "* Activity_Level_Highly_Active vs. Heart Rate (BPM):"
-            "  * It would seem people who are not classed as Highly Active"
-            "    (0) experience higher heart rates, possibly due to"
-            "    being unhealthier that people who are Highly Active (1)."
-            
-            "* Activity_Level_Highly_Active vs Blood Oxygen Level (%):"
-            "  * It would seem individuals who are classed as highly active"
-            "    don't experience blood oxygen levels less than 94.8."
-            "    So people who are highly active tend to have"
-            "    a slightly higher blood oxygen levels overall."
-            
-            "* Activity_Level_Highly_Active vs. Step Count:"
-            "  * It seems that individuals who are not classified"
-            "    as highly active tend to have a more common step count"
-            "    of below 5,000. As the step count increases,"
-            "    the density bottlenecks, indicating that fewer people"
-            "    are achieving higher step counts. The lack of highlights"
-            "    in the positive high activity density area suggests"
-            "    that there are either fewer people in this category,"
-            "    or that their step counts vary significantly more"
-            "    compared to individuals who are not highly active."
-            
-            "* Activity_Level_Highly_Active vs. Sleep Duration (hours):"
-            "  * This shows that people don't experience much change"
-            "    in sleep level when highly active or not,"
-            "    with a higher density for the lower plot being probably"
-            "    due to more people are classed as not highly active than"
-            "    people who are maybe in the normal or low ranges."
-            "* Activity_Level_Highly_Active vs. Stress Level:"
-            "  * The highest density regions in the lower cluster"
-            "    suggest that a significant number of individuals with lower"
-            "    activity levels experience varying stress levels."
-            "    In contrast, the upper cluster shows that fewer highly active"
-            "    individuals have varying stress levels."
-            
-            
-            "  The density clusters (lighter areas) at the bottom of each plot"
-            "  gradually decrease as you go from Highly Active to"
-            "  Active to Sedentary. The higher density in the lower"
-            "  activity levels suggests that a larger proportion of"
-            "  people are classified as the lower brackets of activity"
-            "  levels, with individuals even being below sedentary."
-            
-            "  The lower density in the top density plot (1.0) in the"
-            "  Highly Active group shows that fewer individuals achieve"
-            "  high activity levels. The bottom plot (0.0) represents"
-            "  individuals who are not classified as Highly Active,"
-            "  Active, or Sedentary."
-            
-            " Overall the higher density traveling"
-            "  downwards in these plot suggests that more people are"
-            "  in the lower activity groups (Sedentary and Active),"
-            "  and fewer people are in the Highly Active group. This"
-            "  indicates that more individuals fall into the lower"
-            "  activity brackets and higher activity levels"
-            " should be promoted."
-        )
+        st.write("**Blood Oxygen Level (%) vs. Heart Rate (BPM):**")
+        st.write("- Concentration around 65-80 BPM and 95-100% oxygen.")
+        st.write("- Suggests heart rates are stable with high oxygen.")
+
+        st.write("**Step Count vs. Heart Rate (BPM):**")
+        st.write("- Higher step counts link to tighter heart rate ranges.")
+        st.write("- Bottleneck at 6000 steps for unhealthy rates (160 BPM).")
+
+        st.write("**Step Count vs. Blood Oxygen Level (%):**")
+        st.write("- Higher steps correlate with 95-100% oxygen levels.")
+        st.write("- Indicates maintenance of high oxygen with activity.")
+
+        st.write("**Sleep Duration (hours) vs. Heart Rate (BPM):**")
+        st.write("- Most common is 6-8 hours with a heart rate of 60-80 BPM.")
+        st.write("- Suggests moderate heart rate with sufficient sleep.")
+
+        st.write("**Sleep Duration (hours) vs. Blood Oxygen Level (%):**")
+        st.write("- High oxygen levels (95-100%) persist during any sleep.")
+        st.write("- No significant drop in oxygen with longer sleep hours.")
+
+        st.write("**Stress Level vs. Heart Rate (BPM):**")
+        st.write("- Most individuals fall around 60-80 BPM under stress.")
+        st.write("- Stress shows weak correlation with heart rate.")
+
+        st.write("**Stress Level vs. Blood Oxygen Level (%):**")
+        st.write("- Oxygen remains high (95-100%) during stress levels.")
+        st.write("- Stress seems unaffected by oxygen concentration.")
+
+        st.write("**Activity Level (Highly Active) vs. Stress Levels:**")
+        st.write("- Highly Active individuals show consistent step counts.")
+        st.write("- Stress variation is less clustered for active people.")
 
     pps_matrix_raw = pps.matrix(df_encoded)
     pps_matrix = pps_matrix_raw.filter(['x', 'y', 'ppscore']).pivot(

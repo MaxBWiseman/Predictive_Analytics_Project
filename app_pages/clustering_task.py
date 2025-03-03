@@ -165,7 +165,7 @@ def page_cluster_body():
         " of cluster sizes between 2 and 10.\n"
         "* The pipeline was fitted with a cluster size of 6,"
         " which was one of the best silhouette scores.\n"
-        "* The pipeline average silhouette score is 0.6"
+        "* The pipeline average silhouette score is 0.4"
     )
     st.write("---")
 
@@ -220,10 +220,47 @@ def page_cluster_body():
              " about 3-5% of the variable actually goes towards the"
              " end clustering, so it doesn't plot well.")
 
-    st.write("I would have liked time to improve this, but I ran out of time.")
+    st.write(
+        "Activity Level and Stress Level are the most "
+        "important features for the clustering model."
+    )
+
+    st.write(
+        "The 3rd most important feature is Blood Oxygen Level, "
+        "although its values are very dense and only about 3-5% "
+        "of the variable actually goes towards the end clustering, "
+        "so it doesn't plot well."
+    )
 
     st.write("#### PCA Component Plot")
     st.image(pca_component_plot)
+
+    st.write("### Insights from the PCA Scatter Plot")
+    st.write(
+        "1. **Cluster Structure**: The scatter plot shows data points "
+        "clustered into six groups after applying PCA. Each cluster, "
+        "numbered from 0 to 5, is represented by unique colors for easy "
+        "distinction."
+    )
+    st.write(
+        "2. **Cluster Centers**: The black crosses mark the centroids of "
+        "the clusters, indicating the average position of each group in "
+        "the reduced dimensional space."
+    )
+    st.write(
+        "3. **PCA Components**: The x-axis represents PCA Component 0, "
+        "while the y-axis represents PCA Component 1. These components "
+        "capture the major variations in the dataset."
+    )
+    st.write(
+        "4. **Distinct Groupings**: The visualization highlights clear "
+        "separation between most clusters, suggesting good clustering "
+        "performance."
+    )
+    st.write(
+        "5. **Dimensionality Reduction**: PCA effectively reduced the "
+        "dataset's dimensionality, while preserving its structure."
+    )
 
     st.write("#### Cluster Distribution per Activity Level and Stress Level")
     df_cluster_vs1 = cluster_final_df.copy()
@@ -318,6 +355,8 @@ def cluster_task_start():
 
     def PipelineCluster():
         pipeline_base = Pipeline([
+            ('ordinal_encoder', dm.OrdinalEncoder(
+                encoding_method='arbitrary', variables=["Activity Level"])),
             ('pca', PCA(n_components=3, random_state=RANDOM_STATE)),
             ('cluster', KMeans(n_clusters=6, random_state=RANDOM_STATE)),
         ])

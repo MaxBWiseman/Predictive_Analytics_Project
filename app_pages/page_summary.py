@@ -4,6 +4,28 @@ import streamlit as st
 def page_summary_body():
     st.write("### Quick Project Summary")
 
+    st.write("## Dataset Content")
+    st.write(
+        "The dataset is public and was posted on Kaggle.com by user "
+        "**Mohammed Arfath R**. For the purpose of this project, an "
+        "uncleaned dataset was selected. Below are the key details:\n\n"
+        "- **Data Types**: The dataset contains 6 continuous numeric "
+        "columns (integer/float) and 1 categorical column (object).\n"
+        "- **Columns**: The columns describe data about the following:\n"
+        "  - Heart Rate\n"
+        "  - Blood Oxygen\n"
+        "  - Step Count\n"
+        "  - Sleep Duration\n"
+        "  - Activity Levels\n"
+        "  - Stress Level"
+    )
+    st.write(
+        "For more information or to access the dataset, visit the Kaggle "
+        "link below:"
+    )
+    st.write("[Kaggle Dataset Link](https://www.kaggle.com/datasets/mohamm"
+             "edarfathr/smartwatch-health-data-uncleaned/data)")
+
     st.info(
         "**Dataset Content**\n"
         "* The dataset is public and posted to Kaggle.com"
@@ -39,69 +61,4 @@ def page_summary_body():
         "* For additional information, please visit and **read**"
         " the README.md file in the project's GitHub repository."
         "* https://github.com/MaxBWiseman/Predictive_Analytics_Project "
-    )
-
-    # Business Requirements
-    st.success(
-        "**Business Requirements**\n"
-        "A company wishes to:\n"
-        "* Segment users into different groups based on health and"
-        " activity data collected from smart watch sensors.\n"
-        "* Target these segments with specific market"
-        " advertisements for fitness products, health supplements,"
-        " or health/wellness classes/programs.\n"
-        "* Conduct research on the correlation between various"
-        " health metrics (e.g., heart rate, activity level, stress level)"
-        " to improve customer experience with targeted"
-        " advertisements and product suggestions."
-    )
-
-    # Hypothesis 1
-    st.success(
-        "**Hypothesis 1**\n"
-        "* Users can be segmented into distinct groups"
-        " based on their health and activity data.\n"
-        "* Significance Level/Alpha: 5%\n"
-        "* Null Hypothesis: Users cannot be segmented into"
-        " groups based on their smart watch health and activity data.\n"
-        "* Validation Approach:\n"
-        "    * Data cleaning and feature engineering\n"
-        "    * Clustering methods\n"
-        "    * Clustering evaluation\n"
-        "    * Predict what marketable group the customers belong to"
-    )
-
-    # Hypothesis 2
-    st.success(
-        "**Hypothesis 2**\n"
-        "* Users with varying stress levels are expected to find either"
-        " positive or negative correlations with other smart-watch health"
-        " variables. Try and predict stress levels if applicable.\n"
-        "* Significance Level/Alpha: 5%\n"
-        "* Null Hypothesis: There won't be a correlation"
-        " between activity level and stress level.\n"
-        "* Validation Approach:\n"
-        "    * Data cleaning and feature engineering\n"
-        "    * Data visualization\n"
-        "    * Correlation/PPS analysis\n"
-        "    * Discover marketable correlations/relationships with"
-        " an ML solution if applicable"
-    )
-
-    # Hypothesis 3
-    st.success(
-        "**Hypothesis 3**\n"
-        "* Users with high or low step counts are expected to find"
-        " either positive or negative correlations with other"
-        " smart-watch health variables."
-        " Try and predict step counts if applicable.\n"
-        "* Significance Level/Alpha: 5%\n"
-        "* Null Hypothesis: There won't be a correlation"
-        " between heart rate and step count.\n"
-        "* Validation Approach:\n"
-        "    * Data cleaning and feature engineering\n"
-        "    * Data visualization\n"
-        "    * Correlation/PPS analysis\n"
-        "    * Discover marketable correlations/relationships"
-        " with an ML solution if applicable"
     )
