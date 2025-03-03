@@ -269,7 +269,7 @@ def page_cluster_body():
     cluster_profile.columns = ["Cluster", "Count"]
     st.table(cluster_profile)
 
-def main():
+def cluster_task_start():
     st.title("Smartwatch Health Data Clustering")
 
     df = dm.load_data()
@@ -306,6 +306,3 @@ def main():
             st.error(f"Error processing uploaded file: {e}")
 
     page_cluster_body()
-
-if __name__ == '__main__':
-    main()

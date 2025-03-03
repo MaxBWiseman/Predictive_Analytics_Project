@@ -260,6 +260,19 @@ def CleanDataPipeline():
         ])
     return cleaning_engineering_pipeline
 
+def CleanDataPipelineModified():
+    cleaning_engineering_pipeline = Pipeline([
+        ('data_type_transformer', DataTypeTransformer()),
+        ('knn_imputer', KNNImputerTransformer(n_neighbors=3)),
+        ('winsorizer_transformer', WinsorizerTransformer()),
+        ('categorical_imputer', CategoricalImputer()),
+        ('category_corrector', CategoryCorrector()),
+        ('data_smoother', DataSmoother(k=3)),
+        ('outlier_trimmer_transformer', OutlierTrimmerTransformer()),
+        ('float_to_int', FloatToInt()),
+        ])
+    return cleaning_engineering_pipeline
+
 import plotly.express as px
 
 def load_data():
@@ -267,6 +280,14 @@ def load_data():
     df = df.drop("User ID", axis=1)
     pipeline = CleanDataPipeline()
     df = pipeline.fit_transform(df)
+    return df
+
+def load_data_study():
+    df = pd.read_csv("src/unclean_smartwatch_health_data.csv")
+    df = df.drop("User ID", axis=1)
+    pipeline = CleanDataPipelineModified()
+    df = pipeline.fit_transform(df)
+    df = pd.DataFrame(df)
     return df
 
 def load_pkl_file(file_path):

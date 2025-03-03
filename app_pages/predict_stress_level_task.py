@@ -65,8 +65,8 @@ def DiscretPipelineModel():
     return pipeline
 
 
-def main():
-    st.title("Smartwatch Health Data Discretization and Prediction")
+def predict_stress_level_start():
+    st.title("Smartwatch Health Data Stress Level Discretization and Prediction")
 
     # Initialize session state for the checkbox
     if 'use_inbuilt_data' not in st.session_state:
@@ -195,7 +195,3 @@ def main():
         plt.title('Feature Importance')
         plt.tight_layout()
         st.pyplot(fig)
-
-
-if __name__ == '__main__':
-    main()
