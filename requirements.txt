@@ -8,6 +8,7 @@ kaggle==1.6.17
 kiwisolver==1.4.8
 multimethod==1.12
 networkx==3.4.2
+pandas==1.5.3
 patsy==1.0.1
 phik==0.12.4
 pingouin==0.5.5
