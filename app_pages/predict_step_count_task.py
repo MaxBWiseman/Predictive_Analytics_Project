@@ -1,3 +1,9 @@
+from sklearn.pipeline import Pipeline
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import ExtraTreesClassifier
+from sklearn.feature_selection import SelectFromModel
+from sklearn.metrics import classification_report, confusion_matrix
+from feature_engine.discretisation import EqualWidthDiscretiser
 import os
 import sys
 import pickle
@@ -6,14 +12,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 from sklearn.pipeline import Pipeline
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import ExtraTreesClassifier
-from sklearn.feature_selection import SelectFromModel
-from sklearn.metrics import classification_report, confusion_matrix
-from feature_engine.discretisation import EqualWidthDiscretiser
 # Add the src directory to the Python path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 import data_management as dm
+# This complains anywhere its put on the import list
 
 
 def confusion_matrix_and_report(X, y, pipeline, label_map):
@@ -166,6 +168,8 @@ def predict_step_count_task():
             "outputs/predict_step_count/"
             "discretized_smartwatch_health_data_model.pkl", "wb") as file:
             pickle.dump(best_pipeline_modeler, file)
+            # This comes up as a warning in the console, but not other way to
+            # shorten the line.
 
         # Download results
         st.write("Download processed data:")
