@@ -97,8 +97,7 @@ This dashboard doesn't just show the results of our machine learning models—it
 
 ## Unfixed Bugs
 
-* None I am aware of.
-
+* There is a visual bug in the dashboards, sometimes you will see text that has "" quotes around it unnessesarily, this is because of line breaks
 ## Deployment
 
 ### Heroku
