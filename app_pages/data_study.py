@@ -148,6 +148,7 @@ def page_study_body():
             "    heart rate of 65-80 BPM and blood oxygen levels of 95-100%."
             "    This suggests that most individuals have a heart"
             "    rate within this range when blood oxygen levels are high."
+            
             "* Step Count vs. Heart Rate (BPM):"
             "  * Higher step counts are associated with a more tight"
             "    range of heart rates, with a concentration around 60-90 BPM."
@@ -157,26 +158,31 @@ def page_study_body():
             "    rate of around 160 bpm starts bottlenecking at the"
             "    6000 steps mark. Showing few people with a"
             "    high heart rate have a step count over 6000."
+            
             "* Step Count vs. Blood Oxygen Level (%):"
             "  * Higher step counts are associated with blood oxygen"
             "    levels around 95-100%. This suggests that individuals"
             "    with higher step counts tend to maintain high"
             " blood oxygen levels."
+            
             "* Sleep Duration (hours) vs. Heart Rate (BPM):"
             "  * There's a concentration of data points around 6-8"
             "    hours of sleep and a heart rate of 60-80 BPM."
             "    This suggests that individuals who sleep for"
             "    6-8 hours tend to have a moderate heart rate."
+            
             "* Sleep Duration (hours) vs. Blood Oxygen Level (%):"
             "  * Sleep duration is generally associated with blood"
             "    oxygen levels around 95-100%. This suggests that"
             "    individuals maintain high blood oxygen"
             "    levels regardless of sleep duration."
+            
             "* Sleep Duration (hours) vs. Step Count:"
             "  * There's a concentration of data points around 6-8 hours"
             "    of sleep. This shows that people with lower step counts"
             "    tend to sleep longer than people with higher step counts."
             "    The people with lower step counts are the majority."
+            
             "* Stress Level vs. Heart Rate (BPM):"
             "  * There's a concentration of data points around a heart"
             "    rate of 60-80 BPM and varying stress levels."
@@ -184,33 +190,40 @@ def page_study_body():
             "    correlated with heart rate. But you could say most"
             "    people during varying levels of stress"
             "    experience heart rates of around 60-80 bpm."
+            
             "* Stress Level vs. Blood Oxygen Level (%):"
             "  * Stress levels are associated with blood"
             "    oxygen levels around 95-100%. This suggests that"
             "    individuals maintain high blood oxygen levels during stress."
+            
             "* Stress Level vs. Step Count:"
             "  * There's a concentration of data points around"
             "    varying stress levels and lower step counts."
             "    This suggests that people with a higher step count"
             "    feel less stressed, with majority having a low step"
             "    count and experiencing fluctuating levels of stress."
+            
             "* Stress Level vs. Sleep Duration (hours):"
             "  * There's a concentration of data points around 6-8 hours"
             "    of sleep and varying stress levels. This suggests that people"
             "    who are experiencing varying levels of stress"
             "    only sleep for about 6-7 hours."
+            
             "* OneHotEncoder generated columns from the"
             "  'Activity Levels' categoric variable"
             "  that consisted of 3 classes after cleaning"
+            
             "* Activity_Level_Highly_Active vs. Heart Rate (BPM):"
             "  * It would seem people who are not classed as Highly Active"
             "    (0) experience higher heart rates, possibly due to"
             "    being unhealthier that people who are Highly Active (1)."
+            
             "* Activity_Level_Highly_Active vs Blood Oxygen Level (%):"
             "  * It would seem individuals who are classed as highly active"
             "    don't experience blood oxygen levels less than 94.8."
             "    So people who are highly active tend to have"
             "    a slightly higher blood oxygen levels overall."
+            
             "* Activity_Level_Highly_Active vs. Step Count:"
             "  * It seems that individuals who are not classified"
             "    as highly active tend to have a more common step count"
@@ -221,6 +234,7 @@ def page_study_body():
             "    that there are either fewer people in this category,"
             "    or that their step counts vary significantly more"
             "    compared to individuals who are not highly active."
+            
             "* Activity_Level_Highly_Active vs. Sleep Duration (hours):"
             "  * This shows that people don't experience much change"
             "    in sleep level when highly active or not,"
@@ -233,17 +247,22 @@ def page_study_body():
             "    activity levels experience varying stress levels."
             "    In contrast, the upper cluster shows that fewer highly active"
             "    individuals have varying stress levels."
+            
+            
             "  The density clusters (lighter areas) at the bottom of each plot"
             "  gradually decrease as you go from Highly Active to"
             "  Active to Sedentary. The higher density in the lower"
             "  activity levels suggests that a larger proportion of"
             "  people are classified as the lower brackets of activity"
             "  levels, with individuals even being below sedentary."
+            
             "  The lower density in the top density plot (1.0) in the"
             "  Highly Active group shows that fewer individuals achieve"
             "  high activity levels. The bottom plot (0.0) represents"
             "  individuals who are not classified as Highly Active,"
-            "  Active, or Sedentary. Overall the higher density traveling"
+            "  Active, or Sedentary."
+            
+            " Overall the higher density traveling"
             "  downwards in these plot suggests that more people are"
             "  in the lower activity groups (Sedentary and Active),"
             "  and fewer people are in the Highly Active group. This"
