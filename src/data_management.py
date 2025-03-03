@@ -1,5 +1,4 @@
-from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
-import plotly.express as px
+from sklearn.preprocessing import RobustScaler
 from feature_engine.encoding import OrdinalEncoder
 from sklearn.pipeline import Pipeline
 from feature_engine.outliers import OutlierTrimmer
@@ -7,12 +6,9 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.ensemble import RandomForestClassifier
 from feature_engine.outliers import Winsorizer
 from sklearn.impute import KNNImputer
-import streamlit as st
 import pandas as pd
 import numpy as np
-import joblib
 import pickle
-import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 
 # Replace 'Very High' with 10 in 'Stress Level' and convert columns to numeric

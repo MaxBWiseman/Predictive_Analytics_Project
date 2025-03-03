@@ -81,8 +81,17 @@ If correlation exists attempt to predict (Stress Level, Step Count).
 
 ## Dashboard Design
 
-* List all dashboard pages and their content, either blocks of information or widgets, like buttons, checkboxes, images, or any other item that your dashboard library supports.
-* Later, during the project development, you may revisit your dashboard plan to update a given feature (for example, at the beginning of the project you were confident you would use a given plot to display an insight but subsequently you used another plot type).
+My dashboard is built with user-friendly widgets to make your data exploration straightforward:
+
+Checkboxes: Customize what you see by toggling different plots or performance metrics.
+
+Colored Highlights: We've used colors to make key information stand out, which is especially helpful for visual learners.
+
+Images: Displayed plots help you visualize the data clearly.
+
+Interactive Plots: Engage with the data using interactive plots like parallel coordinates or heatmaps.
+
+This dashboard doesn't just show the results of our machine learning models—it lets you get involved with the data directly. By combining clear visuals with easy-to-use widgets, we're turning complex data into insights you can actually use. Whether you're adjusting model settings, exploring how different features relate, or checking how well the model is performing, this dashboard makes it easier to understand and interact with the machine learning process.
 
 
 
@@ -135,7 +144,7 @@ Everything in this project apart from the dataset and a few select functions pro
 - No third part media included in project
 
 
-## Acknowledgements (optional)
+## More words from developer
 
 My journey through Code Institute has been nothing short of a rollercoaster, an exciting transformative experience that has reshaped my life. I am forever grateful to Code Institute for igniting a passion for coding that started as a small hobby and has since growb into a life-changing career.
 

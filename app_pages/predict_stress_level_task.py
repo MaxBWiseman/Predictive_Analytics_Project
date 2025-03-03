@@ -15,22 +15,27 @@ from feature_engine.discretisation import ArbitraryDiscretiser
 # Add the src directory to the Python path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
+
 def confusion_matrix_and_report(X, y, pipeline, label_map):
     prediction = pipeline.predict(X)
-    
+
     # Confusion Matrix
     st.write('---  Confusion Matrix  ---')
     cm = confusion_matrix(y_true=y, y_pred=prediction)
-    cm_df = pd.DataFrame(cm, 
-                         columns=[f"Actual {label_map[n]}" for n in range(len(label_map))],
-                         index=[f"Predicted {label_map[n]}" for n in range(len(label_map))])
-    st.dataframe(cm_df)  # Use st.dataframe for better rendering in Streamlit
-    
+    cm_df = pd.DataFrame(cm,
+                         columns=[f"Actual {label_map[n]}" for n in range(
+                             len(label_map))],
+                         index=[f"Predicted {label_map[n]}" for n in range(
+                             len(label_map))])
+    st.dataframe(cm_df)
+
     # Classification Report
     st.write('---  Classification Report  ---')
-    report = classification_report(y, prediction, target_names=list(label_map), output_dict=True)
+    report = classification_report(
+        y, prediction, target_names=list(label_map), output_dict=True)
     report_df = pd.DataFrame(report).transpose()
     st.dataframe(report_df)  # Show the classification report as a DataFrame
+
 
 def clf_performance(X_train, y_train, X_test, y_test, pipeline, label_map):
     st.write("#### Train Set ####")
@@ -59,26 +64,28 @@ def FullDiscretPipeline():
 
 def DiscretPipelineModel():
     pipeline = Pipeline([
-        ('feature_selection', SelectFromModel(estimator=ExtraTreesClassifier())),
+        ('feature_selection', SelectFromModel(
+            estimator=ExtraTreesClassifier())),
         ('model',  ExtraTreesClassifier())
     ])
     return pipeline
 
 
 def predict_stress_level_start():
-    st.title("Smartwatch Health Data Stress Level Discretization and Prediction")
+    st.title("Smartwatch Health Data Stress"
+             " Level Discretization and Prediction")
 
     # Initialize session state for the checkbox
     if 'use_inbuilt_data' not in st.session_state:
         st.session_state.use_inbuilt_data = False
-    
+
     # Upload file
     uploaded_file = st.file_uploader(
         "Upload your dataset (CSV format)", type=["csv"])
 
     st.write("Or select here to use the in-built dataset:")
     use_inbuilt_data = st.checkbox("Use in-built dataset")
-    
+
     if use_inbuilt_data:
         df = pd.read_csv("src/unclean_smartwatch_health_data.csv")
         st.write("In-built Dataset:")
@@ -101,21 +108,24 @@ def predict_stress_level_start():
 
         # placeholder
         placeholder = st.empty()
-        placeholder.write("### Please wait for the model to be trained and predictions to be made...")
+        placeholder.write(
+            "### Please wait for the model to be trained"
+            " and predictions to be made...")
 
         best_pipeline = FullDiscretPipeline()
         df_discret = best_pipeline.fit_transform(df)
 
-        X_train, X_test, y_train, y_test = train_test_split(df_discret.drop(columns=['Stress Level']),
-                                                            df_discret['Stress Level'],
-                                                            test_size=0.2,
-                                                            random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(
+                                    df_discret.drop(columns=['Stress Level']),
+                                    df_discret['Stress Level'],
+                                    test_size=0.2,
+                                    random_state=42)
 
         st.write("* Train set:", X_train.shape, y_train.shape,
-              "\n* Test set:",  X_test.shape, y_test.shape)
+                 "\n* Test set:",  X_test.shape, y_test.shape)
 
         placeholder.empty()
-            
+
         stress_map = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         disc = ArbitraryDiscretiser(
             binning_dict={'Stress Level': stress_map}, return_object=True)
@@ -150,9 +160,11 @@ def predict_stress_level_start():
         st.dataframe(results_df)
 
         # Save the model as pkl
-        if not os.path.exists('outputs/predict_stress_level'):
-            os.makedirs('outputs/predict_stress_level')
-        with open("outputs/predict_stress_level/discretized_smartwatch_health_data_model.pkl", "wb") as file:
+        if not os.path.exists('outputs/predict_step_count'):
+            os.makedirs('outputs/predict_step_count')
+        with open(
+                "outputs/predict_step_count/"
+                "discretized_smartwatch_health_data_model.pkl", "wb") as file:
             pickle.dump(best_pipeline_modeler, file)
 
         # Download results
@@ -163,21 +175,27 @@ def predict_stress_level_start():
 
         y_train = y_train.astype(str)
         y_test = y_test.astype(str)
-    
-        labels = [str(label) for label in y_train.value_counts().index.to_list()]
-        
+
+        labels = [str(label)
+                  for label in y_train.value_counts().index.to_list()]
+
         clf_performance(X_train=X_train, y_train=y_train,
                         X_test=X_test, y_test=y_test,
                         pipeline=best_pipeline_modeler,
                         label_map=labels
                         )
-        
+
         columns_after_data_cleaning_feat_eng = df_discret.columns.to_list()
-        print(f"* The pipeline has {len(columns_after_data_cleaning_feat_eng)} features after data cleaning and feature engineering.")
+        print(
+            f"* The pipeline has {len(columns_after_data_cleaning_feat_eng)}"
+            " features after data cleaning and feature engineering.")
 
         # Ensure the indices are within bounds
-        support = best_pipeline_modeler.named_steps['feature_selection'].get_support()
-        best_features = [columns_after_data_cleaning_feat_eng[i] for i in range(len(support)) if support[i]]
+        support = best_pipeline_modeler.named_steps[
+            'feature_selection'].get_support(
+        )
+        best_features = [columns_after_data_cleaning_feat_eng[i]
+                         for i in range(len(support)) if support[i]]
 
         # create DataFrame to display feature importance
         df_feature_importance = (pd.DataFrame(data={
@@ -186,12 +204,14 @@ def predict_stress_level_start():
             .sort_values(by='Importance', ascending=False)
         )
 
-
-        print(f"* These are the {len(best_features)} most important features in descending order. "
-            f"The model was trained on them: \n{df_feature_importance['Feature'].to_list()}")
+        print(f"* These are the {len(best_features)} most"
+              " important features in descending order. "
+              "The model was trained on them:"
+              f" \n{df_feature_importance['Feature'].to_list()}")
 
         fig, ax = plt.subplots()
-        df_feature_importance.plot(kind='bar', x='Feature', y='Importance', ax=ax)
+        df_feature_importance.plot(
+            kind='bar', x='Feature', y='Importance', ax=ax)
         plt.title('Feature Importance')
         plt.tight_layout()
         st.pyplot(fig)

@@ -70,7 +70,8 @@ def parallel_plot(df, columns):
         binning_dict={'Step Count': bin_edges, 'Stress Level': bin_edges2,
                       'Sleep Duration (hours)': bin_edges3,
                       'Heart Rate (BPM)': bin_edges4,
-                      'Blood Oxygen Level (%)': bin_edges5}, return_object=True)
+                      'Blood Oxygen Level (%)': bin_edges5},
+        return_object=True)
 
     # Fit and transform the data
     df_discretized = discretizer.fit_transform(df)

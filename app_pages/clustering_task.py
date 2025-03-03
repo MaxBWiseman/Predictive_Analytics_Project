@@ -2,7 +2,6 @@ from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.feature_selection import SelectFromModel
 from sklearn.cluster import KMeans
-from sklearn.preprocessing import OrdinalEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
 from sklearn.pipeline import Pipeline
@@ -35,10 +34,11 @@ def cluster_distribution_per_variable(df, target):
                       tickvals=df['Clusters'].unique()))
     st.plotly_chart(fig)
 
-    df_relative = (df.groupby(["Clusters", target]).size().unstack(fill_value=0)
-                   .apply(lambda x: 100 * x / x.sum(), axis=1).stack()
-                   .reset_index(name='Relative Percentage (%)')
-                   .sort_values(by=['Clusters', target]))
+    df_relative = (df.groupby(
+        ["Clusters", target]).size().unstack(fill_value=0)
+        .apply(lambda x: 100 * x / x.sum(), axis=1).stack()
+        .reset_index(name='Relative Percentage (%)')
+        .sort_values(by=['Clusters', target]))
 
     print(f"Relative Percentage (%) of {target} in each cluster")
     fig = px.line(df_relative, x='Clusters', y='Relative Percentage (%)',
@@ -116,8 +116,7 @@ def generate_and_save_model(df):
     pipeline_classify.named_steps['feat_selection'].transform(X_train)
 
     columns_after_data_cleaning_feat_eng = X_train.columns[
-        pipeline_classify.named_steps['feat_selection'].get_support(
-    )]
+        pipeline_classify.named_steps['feat_selection'].get_support()]
 
     df_feature_importance = pd.DataFrame({
         'Feature': columns_after_data_cleaning_feat_eng,
@@ -132,7 +131,7 @@ def generate_and_save_model(df):
     st.write(
         f"* These are the {len(best_features)} most important"
         f" features in descending order. ")
-    
+
     st.write(f"The model was trained on them: \n{best_features} \n")
 
     plot_feature_importance(df_feature_importance)
@@ -174,8 +173,6 @@ def page_cluster_body():
     st.write(cluster_pipe)
 
     import numpy as np
-    from sklearn.decomposition import PCA
-    from sklearn.pipeline import Pipeline
 
     def AnalysisPipeline():
         clustering_pipeline = Pipeline([
@@ -209,7 +206,7 @@ def page_cluster_body():
         fig, ax = plt.subplots()
         visualizer = SilhouetteVisualizer(
             estimator=KMeans(n_clusters=n_clusters, random_state=RANDOM_STATE),
-                                          colors='yellowbrick', ax=ax)
+            colors='yellowbrick', ax=ax)
         visualizer.fit(df_analysis)
         st.pyplot(fig)
         plt.close(fig)
@@ -222,7 +219,7 @@ def page_cluster_body():
              " although its values are very dense and only"
              " about 3-5% of the variable actually goes towards the"
              " end clustering, so it doesn't plot well.")
-    
+
     st.write("I would have liked time to improve this, but I ran out of time.")
 
     st.write("#### PCA Component Plot")
@@ -242,8 +239,8 @@ def page_cluster_body():
     " smartwatch health data is by their activity level and stress level.
     * The cluster profile interpretation allowed us to"
     " group the individuals in the following fashion:
-    
-    **Cluster 0:**  
+
+    **Cluster 0:**
     *Stress Levels:* 4, 3, 2
     *Description:* This cluster shows a concentration of individuals
     with stress levels 4, 4 and 2, indicative of very low to low stress levels.
@@ -258,7 +255,7 @@ def page_cluster_body():
     - Incentives for healthy habits, such as wellness program memberships
     - Wearables with comprehensive health tracking features
 
-    **Cluster 1:**  
+    **Cluster 1:**
     *Stress Levels:* 7, 6
     *Description:* Predominantly higher stress levels in this cluster.
     Campaigns could focus on:
@@ -266,7 +263,7 @@ def page_cluster_body():
     - Fitness trackers with stress management features
     - Calming teas, aromatherapy, or stress-relief supplements
 
-    **Cluster 2:**  
+    **Cluster 2:**
     *Stress Levels:* 5, 7, 6
     *Description:* Represents the highest stress levels.
     Suitable advertising includes:
@@ -274,14 +271,14 @@ def page_cluster_body():
     - Fitness programs integrating stress relief
     - Products like ergonomic office equipment to reduce stress
 
-    **Cluster 3:**  
+    **Cluster 3:**
     *Stress Levels:* 5, 4
     *Description:* Mid-level stress is prevalent. Suggested advertising:
     - General stress-relief products such as work-life balance courses
     - Items enhancing productivity or mental clarity, like ergonomic tools
     - Sports and outdoor activities to reduce stress actively
 
-    **Cluster 4:**  
+    **Cluster 4:**
     *Stress Levels:* 10, 9, 8
     *Description:* A mix of moderate and low stress levels.
     Campaign ideas include:
@@ -289,7 +286,7 @@ def page_cluster_body():
     - Premium wellness services tailored to high-stress individuals
     - Tools like guided meditation, sleep aids, or personalized coaching
 
-    **Cluster 5:**  
+    **Cluster 5:**
     *Stress Levels:* 1, 2, 3
     *Description:* A low range of stress levels, from very low to low.
     Campaigns could highlight:
@@ -319,11 +316,24 @@ def page_cluster_body():
 def cluster_task_start():
     st.title("Smartwatch Health Data Clustering")
 
+    def PipelineCluster():
+        pipeline_base = Pipeline([
+            ('pca', PCA(n_components=3, random_state=RANDOM_STATE)),
+            ('cluster', KMeans(n_clusters=6, random_state=RANDOM_STATE)),
+        ])
+        return pipeline_base
+
+    def PipelineClassify():
+        pipeline_final = Pipeline([
+            ("feat_selection", SelectFromModel(
+                GradientBoostingClassifier(random_state=RANDOM_STATE))),
+            ("model", GradientBoostingClassifier(random_state=RANDOM_STATE)),
+        ])
+        return pipeline_final
+
     df = dm.load_data()
 
     generate_and_save_model(df)
-
-    cluster_model = dm.load_pkl_file('outputs/streamlit_outputs/model.pkl')
 
     st.sidebar.title("Data File Input")
     uploaded_file = st.sidebar.file_uploader(
@@ -346,10 +356,11 @@ def cluster_task_start():
                 test_size=0.2,
                 random_state=RANDOM_STATE
             )
-
-            predictions = cluster_model.predict(X_test)
-            print(confusion_matrix(y_test, predictions))
-            print(classification_report(y_test, predictions))
+            cluster_predictions = PipelineClassify()
+            cluster_predictions.fit(X_train, y_train)
+            predictions = cluster_predictions.predict(X_test)
+            st.write(confusion_matrix(y_test, predictions))
+            st.write(classification_report(y_test, predictions))
             st.write("Predictions:", predictions)
         except Exception as e:
             st.error(f"Error processing uploaded file: {e}")

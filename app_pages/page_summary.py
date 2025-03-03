@@ -103,5 +103,5 @@ def page_summary_body():
         "    * Data visualization\n"
         "    * Correlation/PPS analysis\n"
         "    * Discover marketable correlations/relationships"
-            " with an ML solution if applicable"
+        " with an ML solution if applicable"
     )
