@@ -1,3 +1,12 @@
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.feature_selection import SelectFromModel
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import OrdinalEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.decomposition import PCA
+from sklearn.pipeline import Pipeline
+import src.data_management as dm
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -9,27 +18,21 @@ import sys
 # Add the src directory to the Python path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-import src.data_management as dm
-
-from sklearn.pipeline import Pipeline
-from sklearn.decomposition import PCA
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OrdinalEncoder
-from sklearn.cluster import KMeans
-from sklearn.feature_selection import SelectFromModel
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.metrics import classification_report, confusion_matrix
 
 RANDOM_STATE = 42
 
+
 def cluster_distribution_per_variable(df, target):
-    df_bar_plot = df.groupby(['Clusters', target]).size().reset_index(name='Count')
+    df_bar_plot = df.groupby(
+        ['Clusters', target]).size().reset_index(name='Count')
     df_bar_plot.columns = ['Clusters', target, 'Count']
     df_bar_plot[target] = df_bar_plot[target].astype('object')
 
     print(f"Clusters distribution across {target} levels")
-    fig = px.bar(df_bar_plot, x='Clusters', y='Count', color=target, width=800, height=500)
-    fig.update_layout(xaxis=dict(tickmode='array', tickvals=df['Clusters'].unique()))
+    fig = px.bar(df_bar_plot, x='Clusters', y='Count',
+                 color=target, width=800, height=500)
+    fig.update_layout(xaxis=dict(tickmode='array',
+                      tickvals=df['Clusters'].unique()))
     st.plotly_chart(fig)
 
     df_relative = (df.groupby(["Clusters", target]).size().unstack(fill_value=0)
@@ -38,22 +41,28 @@ def cluster_distribution_per_variable(df, target):
                    .sort_values(by=['Clusters', target]))
 
     print(f"Relative Percentage (%) of {target} in each cluster")
-    fig = px.line(df_relative, x='Clusters', y='Relative Percentage (%)', color=target, width=800, height=500)
-    fig.update_layout(xaxis=dict(tickmode='array', tickvals=df['Clusters'].unique()))
+    fig = px.line(df_relative, x='Clusters', y='Relative Percentage (%)',
+                  color=target, width=800, height=500)
+    fig.update_layout(xaxis=dict(tickmode='array',
+                      tickvals=df['Clusters'].unique()))
     fig.update_traces(mode='markers+lines')
     st.plotly_chart(fig)
 
+
 def plot_feature_importance(df_feature_importance):
     fig, ax = plt.subplots()
-    df_feature_importance.plot(kind='bar', x='Feature', y='Importance', legend=False, ax=ax)
+    df_feature_importance.plot(
+        kind='bar', x='Feature', y='Importance', legend=False, ax=ax)
     plt.xlabel("Features")
     plt.ylabel("Importance")
 
     for idx, row in df_feature_importance.iterrows():
-        ax.text(idx, row['Importance'] + 0.01, row['Feature'], ha='center', va='bottom')
+        ax.text(idx, row['Importance'] + 0.01,
+                row['Feature'], ha='center', va='bottom')
 
     st.pyplot(fig)
     plt.close(fig)
+
 
 def generate_and_save_model(df):
     def PipelineCluster():
@@ -65,7 +74,8 @@ def generate_and_save_model(df):
 
     def PipelineClassify():
         pipeline_final = Pipeline([
-            ("feat_selection", SelectFromModel(GradientBoostingClassifier(random_state=RANDOM_STATE))),
+            ("feat_selection", SelectFromModel(
+                GradientBoostingClassifier(random_state=RANDOM_STATE))),
             ("model", GradientBoostingClassifier(random_state=RANDOM_STATE)),
         ])
         return pipeline_final
@@ -105,18 +115,24 @@ def generate_and_save_model(df):
 
     pipeline_classify.named_steps['feat_selection'].transform(X_train)
 
-    columns_after_data_cleaning_feat_eng = X_train.columns[pipeline_classify.named_steps['feat_selection'].get_support()]
+    columns_after_data_cleaning_feat_eng = X_train.columns[
+        pipeline_classify.named_steps['feat_selection'].get_support(
+    )]
 
     df_feature_importance = pd.DataFrame({
         'Feature': columns_after_data_cleaning_feat_eng,
-        'Importance': pipeline_classify.named_steps['model'].feature_importances_
+        'Importance': pipeline_classify.named_steps[
+            'model'].feature_importances_
     }).sort_values(by='Importance', ascending=False)
 
     df_feature_importance.reset_index(drop=True, inplace=True)
 
     best_features = df_feature_importance['Feature'].to_list()
 
-    st.write(f"* These are the {len(best_features)} most important features in descending order. ")
+    st.write(
+        f"* These are the {len(best_features)} most important"
+        f" features in descending order. ")
+    
     st.write(f"The model was trained on them: \n{best_features} \n")
 
     plot_feature_importance(df_feature_importance)
@@ -128,12 +144,16 @@ def generate_and_save_model(df):
 
     X.to_csv('outputs/streamlit_outputs/clustered_data.csv', index=False)
 
-    st.success("Model has been trained and saved as 'outputs/streamlit_outputs/model.pkl'.")
+    st.success(
+        "Model has been trained and"
+        " saved as 'outputs/streamlit_outputs/model.pkl'.")
+
 
 def page_cluster_body():
     df = pd.read_csv('outputs/streamlit_outputs/clustered_data.csv')
     cluster_pipe = dm.load_pkl_file("outputs/streamlit_outputs/model.pkl")
-    pca_component_plot = plt.imread("src/cluster_perm/pca_component_plot_cluster.png")
+    pca_component_plot = plt.imread(
+        "src/cluster_perm/pca_component_plot_cluster.png")
     cluster_profile = df["Clusters"].value_counts().reset_index()
     cluster_final_df = df
 
@@ -142,8 +162,10 @@ def page_cluster_body():
 
     st.write("### ML Pipeline: Cluster Analysis")
     st.info(
-        "* The pipeline was tested with multiple variations of cluster sizes between 2 and 10.\n"
-        "* The pipeline was fitted with a cluster size of 6, which was one of the best silhouette scores.\n"
+        "* The pipeline was tested with multiple variations"
+        " of cluster sizes between 2 and 10.\n"
+        "* The pipeline was fitted with a cluster size of 6,"
+        " which was one of the best silhouette scores.\n"
         "* The pipeline average silhouette score is 0.6"
     )
     st.write("---")
@@ -163,7 +185,8 @@ def page_cluster_body():
         return clustering_pipeline
 
     analysis_pipeline = AnalysisPipeline()
-    df_analysis = analysis_pipeline.fit_transform(cluster_final_df.drop(['Clusters'], axis=1))
+    df_analysis = analysis_pipeline.fit_transform(
+        cluster_final_df.drop(['Clusters'], axis=1))
 
     st.write("#### Clusters Silhouette Plot")
     from yellowbrick.cluster import SilhouetteVisualizer
@@ -173,7 +196,8 @@ def page_cluster_body():
 
     print("=== Average Silhouette Score for different number of clusters ===")
     fig, ax = plt.subplots()
-    visualizer = KElbowVisualizer(KMeans(random_state=42), k=(2, 7), metric='silhouette')
+    visualizer = KElbowVisualizer(
+        KMeans(random_state=42), k=(2, 7), metric='silhouette')
     visualizer.fit(df_analysis)
     visualizer.show()
     st.pyplot(fig)
@@ -183,15 +207,22 @@ def page_cluster_body():
     for n_clusters in np.arange(start=2, stop=7):
         print(f"=== Silhouette plot for {n_clusters} Clusters ===")
         fig, ax = plt.subplots()
-        visualizer = SilhouetteVisualizer(estimator=KMeans(n_clusters=n_clusters, random_state=RANDOM_STATE),
+        visualizer = SilhouetteVisualizer(
+            estimator=KMeans(n_clusters=n_clusters, random_state=RANDOM_STATE),
                                           colors='yellowbrick', ax=ax)
         visualizer.fit(df_analysis)
         st.pyplot(fig)
         plt.close(fig)
         print("\n")
 
-    st.write("Activity Level and Stress Level are the most important features for the clustering model")
-    st.write("The 3rd most important feature is Blood Oxygen Level, although its values are very dense and only about 3-5% of the variable actually goes towards the end clustering, so it doesn't plot well.")
+    st.write(
+        "Activity Level and Stress Level are the most"
+        " important features for the clustering model")
+    st.write("The 3rd most important feature is Blood Oxygen Level,"
+             " although its values are very dense and only"
+             " about 3-5% of the variable actually goes towards the"
+             " end clustering, so it doesn't plot well.")
+    
     st.write("I would have liked time to improve this, but I ran out of time.")
 
     st.write("#### PCA Component Plot")
@@ -202,19 +233,25 @@ def page_cluster_body():
     cluster_distribution_per_variable(df=df_cluster_vs1, target='Stress Level')
 
     df_cluster_vs2 = cluster_final_df.copy()
-    cluster_distribution_per_variable(df=df_cluster_vs2, target='Activity Level')
+    cluster_distribution_per_variable(
+        df=df_cluster_vs2, target='Activity Level')
 
     st.write("#### Cluster Profile")
     statement = """
-    * Overall, the best way to segment individuals with smartwatch health data is by their activity level and stress level.
-    * The cluster profile interpretation allowed us to group the individuals in the following fashion:
+    * Overall, the best way to segment individuals with"
+    " smartwatch health data is by their activity level and stress level.
+    * The cluster profile interpretation allowed us to"
+    " group the individuals in the following fashion:
     
     **Cluster 0:**  
     *Stress Levels:* 4, 3, 2
-    *Description:* This cluster shows a concentration of individuals with stress levels 4, 4 and 2, indicative of very low to low stress levels. Tailored advertisements could include:
+    *Description:* This cluster shows a concentration of individuals
+    with stress levels 4, 4 and 2, indicative of very low to low stress levels.
+    Tailored advertisements could include:
     - Relaxation programs or mindfulness apps
     - Leisure activities such as yoga retreats or hobbies
-    - Low-stress lifestyle products like fitness gadgets or time-management tools
+    - Low-stress lifestyle products like fitness gadgets or
+    time-management tools
     - Personalized wellness approaches for varying stress intensities
     - Supplements or vitamins targeting overall mental well-being
     - A combination of stress management and relaxation techniques
@@ -223,14 +260,16 @@ def page_cluster_body():
 
     **Cluster 1:**  
     *Stress Levels:* 7, 6
-    *Description:* Predominantly higher stress levels in this cluster. Campaigns could focus on:
+    *Description:* Predominantly higher stress levels in this cluster.
+    Campaigns could focus on:
     - Wellness programs for proactive stress prevention
     - Fitness trackers with stress management features
     - Calming teas, aromatherapy, or stress-relief supplements
 
     **Cluster 2:**  
     *Stress Levels:* 5, 7, 6
-    *Description:* Represents the highest stress levels. Suitable advertising includes:
+    *Description:* Represents the highest stress levels.
+    Suitable advertising includes:
     - Stress-reduction workshops and webinars
     - Fitness programs integrating stress relief
     - Products like ergonomic office equipment to reduce stress
@@ -244,30 +283,38 @@ def page_cluster_body():
 
     **Cluster 4:**  
     *Stress Levels:* 10, 9, 8
-    *Description:* A mix of moderate and low stress levels. Campaign ideas include:
+    *Description:* A mix of moderate and low stress levels.
+    Campaign ideas include:
     - Intensive stress management solutions, e.g., therapy apps or counseling
     - Premium wellness services tailored to high-stress individuals
     - Tools like guided meditation, sleep aids, or personalized coaching
 
     **Cluster 5:**  
     *Stress Levels:* 1, 2, 3
-    *Description:* A low range of stress levels, from very low to low. Campaigns could highlight:
+    *Description:* A low range of stress levels, from very low to low.
+    Campaigns could highlight:
     - Relaxation programs or mindfulness apps
     - Leisure activities such as yoga retreats or hobbies
-    - Low-stress lifestyle products like fitness gadgets or time-management tools
+    - Low-stress lifestyle products like
+    fitness gadgets or time-management tools
     - Solutions for low stress, such yoga or meditation classes
     - Supplements or vitamins targeting overall mental well-being
 
     ### Summary of Strategy:
-    By segmenting users into these clusters, advertisers can create tailored campaigns to meet the specific needs of each stress group:
-    - **High Stress Levels (e.g., 7, 8, 9):** Intensive stress-relief solutions or premium health services
-    - **Moderate Stress Levels (e.g., 4, 5, 6):** General wellness and balance-focused campaigns
-    - **Low Stress Levels (e.g., 1, 2, 3):** Proactive lifestyle programs and relaxation activities
+    By segmenting users into these clusters, advertisers can create
+    tailored campaigns to meet the specific needs of each stress group:
+    - **High Stress Levels (e.g., 7, 8, 9):** Intensive stress-relief
+    solutions or premium health services
+    - **Moderate Stress Levels (e.g., 4, 5, 6):** General wellness and
+    balance-focused campaigns
+    - **Low Stress Levels (e.g., 1, 2, 3):** Proactive lifestyle programs
+    and relaxation activities
     """
     st.write(statement)
 
     cluster_profile.columns = ["Cluster", "Count"]
     st.table(cluster_profile)
+
 
 def cluster_task_start():
     st.title("Smartwatch Health Data Clustering")
@@ -279,7 +326,8 @@ def cluster_task_start():
     cluster_model = dm.load_pkl_file('outputs/streamlit_outputs/model.pkl')
 
     st.sidebar.title("Data File Input")
-    uploaded_file = st.sidebar.file_uploader("Upload smartwatch health data", type=["csv"])
+    uploaded_file = st.sidebar.file_uploader(
+        "Upload smartwatch health data", type=["csv"])
 
     if uploaded_file is not None:
         try:
@@ -289,7 +337,8 @@ def cluster_task_start():
             pipeline_cluster = PipelineCluster()
             df_final = pipeline_cluster.fit_transform(data.copy())
             df_final = pd.DataFrame(df_final, columns=data.columns)
-            df_final['Clusters'] = pipeline_cluster.named_steps['cluster'].labels_
+            df_final['Clusters'] = pipeline_cluster.named_steps[
+                'cluster'].labels_
 
             X_train, X_test, y_train, y_test = train_test_split(
                 df_final.drop(['Clusters'], axis=1),

@@ -88,7 +88,7 @@ If correlation exists attempt to predict (Stress Level, Step Count).
 
 ## Unfixed Bugs
 
-* You will need to mention unfixed bugs and why they were not fixed. This section should include shortcomings of the frameworks or technologies used. Although time can be a significant variable to consider, paucity of time and difficulty understanding implementation is not a valid reason to leave bugs unfixed.
+* None I am aware of.
 
 ## Deployment
 
@@ -108,28 +108,44 @@ If correlation exists attempt to predict (Stress Level, Step Count).
 
 ## Main Data Analysis and Machine Learning Libraries
 
-* Here you should list the libraries you used in the project and provide an example(s) of how you used these libraries.
+* Pandas - Used to load and preprocess the data
+* Numpy - For efficient numerical computations
+* SciKit-Learn - For machine learning modelling, including splitting, scaling, training etc
+* Seaborn - For data visuals
+* Matplotlib.pyplot - Also for visuals
+* Pyplot - Interactive visuals
+* xgboost - Used to test the three tasks, to see if suitable algorithm.
+* ydata-profiling - For quick and insightful EDA's
+* Yellowbrick - Helps visualise model related things like feature importance or silhouette/Kelbow plots
+* Feature-Engine - Provides various feature cleaning and engineering solutions
+* ppscore - To aid in finding correlations
 
 
 ## Credits 
 
-* In this section, you need to reference where you got your content, media and extra help from. It is common practice to use code from other repositories and tutorials, however, it is important to be very specific about these sources to avoid plagiarism. 
-* You can break the credits section up into Content and Media, depending on what you have included in your project. 
+* A big thankyou to Code Institute for providing me with the learning material and base functions for building software for predictive analytics.
+* Another big thankyou to Kaggle.com and user "Mohammed Arfath R" for uploading the dataset used in this project. 
 
 ### Content 
 
-- The text for the Home page was taken from Wikipedia Article A
-- Instructions on how to implement form validation on the Sign-Up page were taken from [Specific YouTube Tutorial](https://www.youtube.com/)
-- The icons in the footer were taken from [Font Awesome](https://fontawesome.com/)
+Everything in this project apart from the dataset and a few select functions provided by code institute, is all made by myself.
 
 ### Media
 
-- The photos used on the home and sign-up page are from This Open-Source site
-- The images used for the gallery page were taken from this other open-source site
-
+- No third part media included in project
 
 
 ## Acknowledgements (optional)
 
-* Thank the people who provided support through this project.
+My journey through Code Institute has been nothing short of a rollercoaster, an exciting transformative experience that has reshaped my life. I am forever grateful to Code Institute for igniting a passion for coding that started as a small hobby and has since growb into a life-changing career.
+
+At the beginning of the course, I was filled with confidence and flew through the material. However, the journey took a challenging turn during Project 3, when I began receiving my results for Projects 1 and 2. I hadn’t fully understood the importance of the README file, and, as a result, my submissions failed. Determined to improve, I reworked my projects and eventually earned a merit for Project 3—though it was capped at a pass. Without the cap, it would have achieved a merit.
+
+When it came to Project 4, I saw an opportunity to redeem myself, and I came incredibly close—just two marks shy of a merit. Unfortunately, during the middle of this portfolio project, I experienced the devastating loss of my Nan, Carol Major, who passed away on 2nd November 2024 and was laid to rest at Lympstone Church in early December. Despite my grief, I chose not to take time off, believing that staying focused would help me cope. I pushed through and submitted Project 4, only to discover hours later that one of my site features had a 505 error. This oversight meant that my project received a pass, falling just shy of a merit by only two marks.
+
+I poured my heart and soul into this project, dedicating over 70 hours in just nine days. My timer app—which pauses if the IDE is inactive for more than 10 minutes—accurately tracked the time I invested. For the first time in my life, I found myself wholeheartedly committed to something I genuinely enjoy. I never imagined returning to education, but everything changed the day I stumbled across a YouTube ad for Code Institute. I took on the 5-day coding challenge, and I haven’t looked back since.
+
+This journey has given me something I deeply lacked before: purpose. Despite the ups and downs, I have discovered a true passion that has transformed my life. I can’t wait to share my achievements with others, and I know in my heart that my Nan would be so proud.
+
+Thank you, Code Institute.
 
