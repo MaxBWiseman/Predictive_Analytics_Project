@@ -21,7 +21,7 @@ narwhals==1.28.0
 networkx==3.4.2
 numpy==1.26.4
 nvidia-nccl-cu12==2.25.1
-pandas==2.2.0
+pandas>=1.5,<2.0
 pandas-flavor==0.6.0
 patsy==1.0.1
 phik==0.12.4
@@ -53,10 +53,10 @@ toml==0.10.2
 tqdm==4.67.1
 typeguard==4.4.2
 tzdata==2025.1
-visions==0.7.6
+visions==0.7.5
 watchdog==6.0.0
 wordcloud==1.9.4
-xarray==2025.1.2
+xarray==0.21.1
 xgboost==2.1.4
 ydata-profiling==4.12.2
 yellowbrick==1.5
